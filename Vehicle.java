@@ -24,6 +24,8 @@ public abstract class Vehicle implements Movable {
         stopEngine();
 
     }
+
+    // ------- geters and setters ---------
     protected int getNrDoors() {
         return this.nrDoors;
     }
@@ -52,6 +54,9 @@ public abstract class Vehicle implements Movable {
 
     protected double getDirection(){return this.direction;}
 
+
+    // ---- if the car can move ----
+
     public boolean isMovable() {
         return movable;
     }
@@ -60,6 +65,7 @@ public abstract class Vehicle implements Movable {
         this.movable = movable;
     }
 
+    // ----- Protected methods ---
     protected void startEngine(){
         this.currentSpeed = 0.1;
     }
@@ -73,10 +79,15 @@ public abstract class Vehicle implements Movable {
     protected void incrementSpeed(double amount){
         currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount,enginePower);
     }
-    private void decrementSpeed(double amount){
+    protected void decrementSpeed(double amount){
         currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount,0);
     }
 
+    protected void invertDirection(){
+        direction = (direction + 180)%360;
+    }
+
+    // ----- Public Methods -----
     public void gas(double amount) {
         if (amount >= 0 && amount <= 1) {
             incrementSpeed(amount);
@@ -92,6 +103,7 @@ public abstract class Vehicle implements Movable {
         else {
             throw new IllegalArgumentException("The number is not valid. Please choose a value between 0 and 1");}
     }
+
 
     @Override
     public void move() {
