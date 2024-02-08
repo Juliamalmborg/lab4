@@ -17,8 +17,8 @@ public abstract class Vehicle implements Movable {
         this.enginePower = enginePower;
         this.color = color;
         this.modelName = modelName;
-        this.xpos = 0;
-        this.ypos = 1;
+        this.xpos = xpos;
+        this.ypos = ypos;
         this.direction = 90;
         this.movable = true;
         stopEngine();
