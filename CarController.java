@@ -29,8 +29,10 @@ public class CarController {
         // Instance of this class
         CarController cc = new CarController();
 
+
         cc.cars.add(new Volvo240());
         cc.cars.add(new Saab95());
+
 
 
         // Start a new view and send a reference of self
@@ -52,8 +54,8 @@ public class CarController {
                 if (collision(x, y)){
                     car.invertDirection();//en metod för invertDirection byta riktning
                 }
-                else
-                    frame.drawPanel.moveit(x, y);
+
+                frame.drawPanel.moveit(x, y, cars.indexOf(car));
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
             }
