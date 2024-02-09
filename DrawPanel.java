@@ -13,6 +13,7 @@ public class DrawPanel extends JPanel{
     // Just a single image, TODO: Generalize
     BufferedImage volvoImage;
     BufferedImage saabImage;
+    BufferedImage scaniaImage;
     BufferedImage volvoWorkshopImage;
     // To keep track of a car's position
     ArrayList<Point> vehiclePoints = new ArrayList<>();
@@ -45,6 +46,7 @@ public class DrawPanel extends JPanel{
         try {
             volvoImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg"));
             saabImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg"));
+            scaniaImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg"));
             volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
         } catch (IOException ex)
         {
@@ -54,6 +56,8 @@ public class DrawPanel extends JPanel{
         vehiclePoints.add(new Point(0,0));
         vehicleImage.add(saabImage);
         vehiclePoints.add(new Point(100, 0));
+        vehicleImage.add(scaniaImage);
+        vehiclePoints.add(new Point(200,0));
     }
 
 
