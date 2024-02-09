@@ -21,7 +21,8 @@ public class CarController {
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
-     ArrayList<Vehicle> cars = new ArrayList<>();
+    ArrayList<Vehicle> cars = new ArrayList<>();
+
 
     //methods:
 
@@ -32,12 +33,12 @@ public class CarController {
 
         cc.cars.add(new Volvo240());
         cc.cars.add(new Saab95());
+        cc.cars.add(new Scania());
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
-
-        // Start the timer
         cc.timer.start();
+        // Start the timer
     }
 
     /* Each step the TimerListener moves all the cars in the list and tells the
@@ -83,5 +84,44 @@ public class CarController {
             car.brake(brake);
         }
     }
+    //Till knapparna
+    void setTurboOn(){
+        for (Vehicle car : cars){
+            if (car instanceof Saab95) {
+                ((Saab95) car).setTurboOn();
+                                    }
+        }
+    }
+    void setTurboOff(){
+        for (Vehicle car : cars){
+            if (car instanceof Saab95) {
+                ((Saab95) car).setTurboOff();
+            }
+        }
+    }
+    void raiseRamp(double angle) {
+        for (Vehicle car : cars) {
+            if (car instanceof Scania) {
+                ((Scania) car).raiseRamp(angle);
+            }
+        }
+    }
+    void lowerRamp(double angle) {
+        for (Vehicle car : cars) {
+            if (car instanceof Scania) {
+                ((Scania) car).lowerRamp(angle);
+            }
+        }
+    }
+    void startAllVehicles() {
+        for (Vehicle car : cars) {
+            car.startEngine();
+        }
+    }
 
+    void stopAllVehicles() {
+        for (Vehicle car : cars) {
+            car.stopEngine();
+        }
+    }
 }
