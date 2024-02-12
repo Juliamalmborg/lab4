@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public abstract class Vehicle implements Movable {
+public abstract class Vehicle implements Movable, Positionable {
     private int nrDoors; // Number of doors on the car
     private double enginePower; // Engine power of the car
     private double currentSpeed; // The current speed of the car
@@ -44,9 +44,10 @@ public abstract class Vehicle implements Movable {
     protected void setColor(Color clr) {
         this.color = clr;
     }
-
-    protected double getXpos(){return this.xpos;}
-    protected double getYpos(){return this.ypos;}
+    @Override
+    public double getXpos(){return this.xpos;}
+    @Override
+    public double getYpos(){return this.ypos;}
 
     protected void setXpos(double x) {this.xpos = x;}
 

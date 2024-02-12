@@ -27,7 +27,6 @@ public class CarView extends JFrame{
     JPanel gasPanel = new JPanel();
     JSpinner gasSpinner = new JSpinner();
     int gasAmount = 0;
-    double angle = 0; // Detta behöver ändras, satte bara 0 nu.
     JLabel gasLabel = new JLabel("Amount of gas");
 
     JButton gasButton = new JButton("Gas");
@@ -134,13 +133,13 @@ public class CarView extends JFrame{
         liftBedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.raiseRamp(angle);
+                carC.raiseRamp();
             }
         });
         lowerBedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.lowerRamp(angle);
+                carC.lowerRamp();
             }
         });
         startButton.addActionListener(new ActionListener() {
@@ -157,6 +156,7 @@ public class CarView extends JFrame{
             }
         });
 
+
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();
 
@@ -169,4 +169,5 @@ public class CarView extends JFrame{
         // Make sure the frame exits when "x" is pressed
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+
 }

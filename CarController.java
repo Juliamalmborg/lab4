@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class CarController {
     CarView frame;
     // A list of cars, modify if needed
     ArrayList<Vehicle> cars = new ArrayList<>();
-
+    CarWorkshop<Volvo240> volvoWorkshop = new CarWorkshop<Volvo240>(2, 0, 300);
 
     //methods:
 
@@ -30,10 +31,23 @@ public class CarController {
         // Instance of this class
         CarController cc = new CarController();
 
+        Volvo240 volvo = new Volvo240();
+        volvo.setXpos(0);
+        volvo.setYpos(0);
 
-        cc.cars.add(new Volvo240());
-        cc.cars.add(new Saab95());
-        cc.cars.add(new Scania());
+        Saab95 saab = new Saab95();
+        saab.setXpos(0);
+        saab.setYpos(100);
+
+        Scania scania = new Scania();
+        scania.setXpos(0);
+        scania.setYpos(200);
+
+        cc.cars.add(volvo);
+        cc.cars.add(saab);
+        cc.cars.add(scania);
+
+
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
@@ -50,8 +64,12 @@ public class CarController {
                 car.move();
                 int x = (int) Math.round(car.getXpos());
                 int y = (int) Math.round(car.getYpos());
-                if (collision(x, y)){
+                if (collisionFrame(x, y)) {
                     car.invertDirection();//en metod för invertDirection byta riktning
+                }
+                else if (workshopCollision(x,y) && car instanceof Volvo240) {
+                    volvoWorkshop.load((Volvo240) car);
+                    car.stopEngine();
                 }
                 frame.drawPanel.moveit(x, y, cars.indexOf(car));
                 // repaint() calls the paintComponent method of the panel
@@ -60,14 +78,16 @@ public class CarController {
         }
 
         // This method checks so that the object is with in the panel
-        public boolean collision(int x, int y){
-            int panelWidth = frame.drawPanel.getWidth();
-            int panelHeight = frame.drawPanel.getHeight();
-            return x < 0 || x > panelWidth  || y > panelHeight || y < 0; //just nu åker den lite ut ur rutan
+        public boolean collisionFrame(int x, int y) {
+            int panelWidth = frame.drawPanel.getWidth() ;
+            int panelHeight = frame.drawPanel.getHeight() ;
+            return x < 0 || x > panelWidth || y > panelHeight || y < 0; //just nu åker den lite ut ur rutan
 
         }
+        public boolean workshopCollision(int x, int y) {
+            return x == (int) volvoWorkshop.getXpos() && y == (int) volvoWorkshop.getYpos();
+        }
     }
-
     // Calls the gas method for each car once
     void gas(int amount) {
         double gas = ((double) amount) / 100;
@@ -99,17 +119,17 @@ public class CarController {
             }
         }
     }
-    void raiseRamp(double angle) {
+    void raiseRamp() {
         for (Vehicle car : cars) {
             if (car instanceof Scania) {
-                ((Scania) car).raiseRamp(angle);
+                ((Scania) car).raiseRamp();
             }
         }
     }
-    void lowerRamp(double angle) {
+    void lowerRamp() {
         for (Vehicle car : cars) {
             if (car instanceof Scania) {
-                ((Scania) car).lowerRamp(angle);
+                ((Scania) car).lowerRamp();
             }
         }
     }
@@ -124,4 +144,13 @@ public class CarController {
             car.stopEngine();
         }
     }
+
+    void turnLeft(){
+        for (Vehicle car : cars) {
+            car.turnLeft();
+    }}
+    void turnRight(){
+        for (Vehicle car : cars) {
+            car.turnRight();
+        }}
 }
