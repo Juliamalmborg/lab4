@@ -10,7 +10,7 @@ public class testCarWorkshop {
     private CarWorkshop cw;
 
     @Before
-    public void create_workshop() {cw = new CarWorkshop(2);}
+    public void create_workshop() {cw = new CarWorkshop(2, 300, 300);}
 
     @Test
     public void testloadmaxworkshop(){

@@ -22,16 +22,14 @@ public class DrawPanel extends JPanel{
 
     //Point volvoPoint = new Point();
 
-    Point volvoWorkshopPoint = new Point(300,300);
+    Point volvoWorkshopPoint = new Point(0,300);
 
     // TODO: Make this general for all cars
     void moveit(int x, int y, int index) {
-        if (vehiclePoints.get(index) == vehiclePoints.get(index-1)){  //fattar ej men de hamnar på olika pos
-            vehiclePoints.get(index).x = x;
-            vehiclePoints.get(index).y = y;
+        Point currentPoint = vehiclePoints.get(index);
+        if (currentPoint.x != x || currentPoint.y != y) {
+            currentPoint.setLocation(x, y);
         }
-        vehiclePoints.get(index).x = x;
-        vehiclePoints.get(index).y = y;
     }
 
     // Initializes the panel and reads the images
