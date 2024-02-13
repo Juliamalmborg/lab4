@@ -40,7 +40,7 @@ public class CarController {
         saab.setYpos(100);
 
         Scania scania = new Scania();
-        scania.setXpos(0);
+        scania.setXpos(200);
         scania.setYpos(200);
 
         cc.cars.add(volvo);
@@ -60,17 +60,23 @@ public class CarController {
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            for (Vehicle car : cars) {
+            ArrayList<Vehicle> carsCopy = new ArrayList<>(cars); // carCopy ska vi ha denna?
+            for (Vehicle car : carsCopy) {
                 car.move();
                 int x = (int) Math.round(car.getXpos());
                 int y = (int) Math.round(car.getYpos());
                 if (collisionFrame(x, y)) {
                     car.invertDirection(); //en metod för invertDirection byta riktning
                 }
-                else if (workshopCollision(x,y)) {
-                    volvoWorkshop.load((Volvo240) car);
-                    car.stopEngine();
+                if (workshopCollision(x,y) && car instanceof Volvo240) {
+                    Volvo240 volvo = (Volvo240) car;
+                    volvo.stopEngine();
+                    volvoWorkshop.load(volvo);
                     cars.remove(car);
+                    //frame.drawPanel.removeVehicle(cars.indexOf(car));
+                    frame.drawPanel.vehicleImage.remove(frame.drawPanel.volvoImage);
+                    // frame.drawPanel.vehiclePoints.remove(frame.drawPanel.)
+                    continue;
                 }
                 frame.drawPanel.moveit(x, y, cars.indexOf(car));
                 // repaint() calls the paintComponent method of the panel
@@ -82,13 +88,14 @@ public class CarController {
         public boolean collisionFrame(int x, int y) {
             int panelWidth = frame.drawPanel.getWidth() ;
             int panelHeight = frame.drawPanel.getHeight() ;
-            return x < 0 || x > panelWidth || y > panelHeight || y < 0; //just nu åker den lite ut ur rutan
+            return x < 0 || x > panelWidth - frame.drawPanel.vehicleImage.getFirst().getWidth() || y > panelHeight - frame.drawPanel.vehicleImage.getFirst().getHeight() || y < 0; //just nu åker den lite ut ur rutan
 
         }
         public boolean workshopCollision(int x, int y) {
-            int workshopwidth = frame.drawPanel.volvoWorkshopImage.getWidth();
-            int workshopheight = frame.drawPanel.volvoWorkshopImage.getHeight();
-            return x == workshopwidth && y == workshopheight;
+            double workshopwidth = volvoWorkshop.getXpos();
+            double workshopheight = volvoWorkshop.getYpos();
+            double threshold = 10;
+            return Math.abs(x - workshopwidth) <= threshold && Math.abs(y - workshopheight) <= threshold;
         }
     }
     // Calls the gas method for each car once

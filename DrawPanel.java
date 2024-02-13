@@ -53,9 +53,9 @@ public class DrawPanel extends JPanel{
         vehicleImage.add(volvoImage);
         vehiclePoints.add(new Point(0,0));
         vehicleImage.add(saabImage);
-        vehiclePoints.add(new Point(100, 0));
+        vehiclePoints.add(new Point(0, 100));
         vehicleImage.add(scaniaImage);
-        vehiclePoints.add(new Point(200,0));
+        vehiclePoints.add(new Point(200,200));
     }
 
 
@@ -69,6 +69,14 @@ public class DrawPanel extends JPanel{
         }
         // see javadoc for more info on the parameters
         g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
+    }
+
+    //metod för att ta bort point och bild när en bil tas bort
+    public void removeVehicle(int index) {
+        if (index >= 0 && index < vehicleImage.size() && index < vehiclePoints.size()) {
+            vehicleImage.remove(index);
+            vehiclePoints.remove(index);
+        }
     }
 
 }
