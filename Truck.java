@@ -2,10 +2,10 @@ import java.awt.*;
 
 // ska vara superklass till scania och carTransport
 public abstract class Truck extends Vehicle {
-    protected final TruckPlatform ramp;
+    protected final RampWithStates ramp; // denna kunde inte ha TruckPlatfrom pga hänvisade endast till interfacet
     public Truck(int nrDoors, Color color, double enginePower, String modelName){
         super(nrDoors, color, enginePower, modelName);
-        this.ramp = new RampWithStates();
+        ramp = new RampWithStates();
     }
 
     public void lowerRamp(){
@@ -25,9 +25,8 @@ public abstract class Truck extends Vehicle {
     }
 
     @Override //för att kunna köra bilen efter lastning
-    public void startEngine() {
-        if (!checkMovable()) throw new IllegalStateException("You can't start the engine while platform is down.");
-        if (getCurrentSpeed() > 0.1) throw new IllegalStateException("You have already started the engine");
+    protected void startEngine() {
+        if (ramp.getIsRampOn())throw new IllegalStateException("You can't start the engine while platform is down.");
         super.startEngine();
         }
 
@@ -36,21 +35,13 @@ public abstract class Truck extends Vehicle {
 
     @Override
     public void gas(double amount){
-        if (amount >= 0 && amount <= 1 && getIsRampOn()) {
+        if (amount >= 0 && amount <= 1 && !ramp.getIsRampOn()) { // getIsRampOn ett problem pga den är alltid on så kan ej gasa
             incrementSpeed(amount);
         }
         else {
             throw new IllegalArgumentException("The number is not valid, or the ramp is down. Please choose a value between 0 and 1");
         }}
 
-    private boolean checkMovable() {
-        if (getIsRampOn()) {
-            setMovable(false);
-        } else {
-            setMovable(true);
-        }
-        return isMovable();
-    }
 
     public abstract boolean getIsRampOn();
 

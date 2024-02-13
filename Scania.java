@@ -17,6 +17,7 @@ public class Scania extends Truck {
             throw new IllegalArgumentException("cannot raise ramp while moving");
     }
 
+
     public void lowerRamp(double angle) {
         if (getCurrentSpeed() == 0){
             ramp.lowerRamp(angle);

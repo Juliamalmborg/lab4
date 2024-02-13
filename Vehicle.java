@@ -10,7 +10,6 @@ public abstract class Vehicle implements Movable, Positionable {
     private double ypos; // y-pos of car
     private double direction; // direction of car
     private int size;
-    private boolean movable;
 
     public Vehicle(int nrDoors, Color color, double enginePower, String modelName) {
         this.nrDoors = nrDoors;
@@ -20,7 +19,6 @@ public abstract class Vehicle implements Movable, Positionable {
         this.xpos = xpos;
         this.ypos = ypos;
         this.direction = 90;
-        this.movable = true;
         stopEngine();
 
     }
@@ -56,16 +54,6 @@ public abstract class Vehicle implements Movable, Positionable {
     protected double getDirection(){return this.direction;}
 
 
-    // ---- if the car can move ----
-
-    public boolean isMovable() {
-        return movable;
-    }
-
-    public void setMovable(boolean movable) {
-        this.movable = movable;
-    }
-
     // ----- Protected methods ---
     protected void startEngine(){
         this.currentSpeed = 0.1;
@@ -89,7 +77,7 @@ public abstract class Vehicle implements Movable, Positionable {
     }
 
     // ----- Public Methods -----
-    public void gas(double amount) {
+    public void gas(double amount) { //ska inte kunna gasa om inte startengine är kallad
         if (amount >= 0 && amount <= 1) {
             incrementSpeed(amount);
         }
