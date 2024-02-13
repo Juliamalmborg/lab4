@@ -8,7 +8,7 @@ public class RampWithStates implements TruckPlatform {
     public void raiseRamp() {
         isRampOn = false;
     }
-    public RampWithStates() {
+    public RampWithStates() { //Är detta konstruktorn borde den inte ligga först?
         this.isRampOn = false;
     }
 

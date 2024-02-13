@@ -65,11 +65,12 @@ public class CarController {
                 int x = (int) Math.round(car.getXpos());
                 int y = (int) Math.round(car.getYpos());
                 if (collisionFrame(x, y)) {
-                    car.invertDirection();//en metod för invertDirection byta riktning
+                    car.invertDirection(); //en metod för invertDirection byta riktning
                 }
-                else if (workshopCollision(x,y) && car instanceof Volvo240) {
+                else if (workshopCollision(x,y)) {
                     volvoWorkshop.load((Volvo240) car);
                     car.stopEngine();
+                    cars.remove(car);
                 }
                 frame.drawPanel.moveit(x, y, cars.indexOf(car));
                 // repaint() calls the paintComponent method of the panel
@@ -85,7 +86,9 @@ public class CarController {
 
         }
         public boolean workshopCollision(int x, int y) {
-            return x == (int) volvoWorkshop.getXpos() && y == (int) volvoWorkshop.getYpos();
+            int workshopwidth = frame.drawPanel.volvoWorkshopImage.getWidth();
+            int workshopheight = frame.drawPanel.volvoWorkshopImage.getHeight();
+            return x == workshopwidth && y == workshopheight;
         }
     }
     // Calls the gas method for each car once
@@ -144,13 +147,4 @@ public class CarController {
             car.stopEngine();
         }
     }
-
-    void turnLeft(){
-        for (Vehicle car : cars) {
-            car.turnLeft();
-    }}
-    void turnRight(){
-        for (Vehicle car : cars) {
-            car.turnRight();
-        }}
 }

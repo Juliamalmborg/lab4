@@ -43,8 +43,7 @@ public class RampWithAngle implements TruckPlatform {
     }
 
 
-    private boolean checkRampIsDown(double angle){
-        return angle == maxAngle;
+    private boolean checkRampIsDown(double angle){ return angle != 0;
     }
 
     private boolean checkRampIsUp(double angle){
