@@ -23,7 +23,7 @@ public class CarController {
     CarView frame;
     // A list of cars, modify if needed
     ArrayList<Vehicle> cars = new ArrayList<>();
-    CarWorkshop<Volvo240> volvoWorkshop = new CarWorkshop<Volvo240>(2, 0, 300);
+    CarWorkshop<Volvo240> volvoWorkshop = new CarWorkshop<Volvo240>(1, 0, 300);
 
     //methods:
 
@@ -40,14 +40,12 @@ public class CarController {
         saab.setYpos(100);
 
         Scania scania = new Scania();
-        scania.setXpos(200);
+        scania.setXpos(0);
         scania.setYpos(200);
 
         cc.cars.add(volvo);
         cc.cars.add(saab);
         cc.cars.add(scania);
-
-
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
@@ -73,9 +71,7 @@ public class CarController {
                     volvo.stopEngine();
                     volvoWorkshop.load(volvo);
                     cars.remove(car);
-                    //frame.drawPanel.removeVehicle(cars.indexOf(car));
-                    frame.drawPanel.vehicleImage.remove(frame.drawPanel.volvoImage);
-                    // frame.drawPanel.vehiclePoints.remove(frame.drawPanel.)
+                    frame.drawPanel.removeVehicle(frame.drawPanel.vehicleImage.indexOf(frame.drawPanel.volvoImage));
                     continue;
                 }
                 frame.drawPanel.moveit(x, y, cars.indexOf(car));
@@ -88,14 +84,16 @@ public class CarController {
         public boolean collisionFrame(int x, int y) {
             int panelWidth = frame.drawPanel.getWidth() ;
             int panelHeight = frame.drawPanel.getHeight() ;
-            return x < 0 || x > panelWidth - frame.drawPanel.vehicleImage.getFirst().getWidth() || y > panelHeight - frame.drawPanel.vehicleImage.getFirst().getHeight() || y < 0; //just nu åker den lite ut ur rutan
+            int ImageWidth = frame.drawPanel.vehicleImage.getFirst().getWidth();
+            int ImageHeight = frame.drawPanel.vehicleImage.getFirst().getHeight();
+            return x < 0 || x > panelWidth - ImageWidth || y > panelHeight - ImageHeight || y < 0;
 
         }
         public boolean workshopCollision(int x, int y) {
-            double workshopwidth = volvoWorkshop.getXpos();
-            double workshopheight = volvoWorkshop.getYpos();
+            double workshopWidth = volvoWorkshop.getXpos();
+            double workshopHeight = volvoWorkshop.getYpos();
             double threshold = 10;
-            return Math.abs(x - workshopwidth) <= threshold && Math.abs(y - workshopheight) <= threshold;
+            return Math.abs(x - workshopWidth) <= threshold && Math.abs(y - workshopHeight) <= threshold;
         }
     }
     // Calls the gas method for each car once
