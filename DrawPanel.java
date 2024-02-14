@@ -60,10 +60,9 @@ public class DrawPanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (int i = 0; i <vehicleImage.size(); i++) {
+        for (int i = 0; i <vehicleImage.size(); i++) { // Matcha idex på image, så att rätt image får rätt Point
             g.drawImage(vehicleImage.get(i), vehiclePoints.get(i).x, vehiclePoints.get(i).y, null);
         }
-        // see javadoc for more info on the parameters
         g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
     }
 
