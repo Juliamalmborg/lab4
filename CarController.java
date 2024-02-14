@@ -92,7 +92,7 @@ public class CarController {
         public boolean workshopCollision(int x, int y) {
             double workshopWidth = volvoWorkshop.getXpos();
             double workshopHeight = volvoWorkshop.getYpos();
-            double threshold = 10;
+            double threshold = 10; //
             return Math.abs(x - workshopWidth) <= threshold && Math.abs(y - workshopHeight) <= threshold;
         }
     }
