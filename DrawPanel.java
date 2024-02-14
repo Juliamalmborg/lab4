@@ -20,16 +20,12 @@ public class DrawPanel extends JPanel{
 
     ArrayList<BufferedImage> vehicleImage = new ArrayList<>();
 
-    //Point volvoPoint = new Point();
-
     Point volvoWorkshopPoint = new Point(0,300);
 
     // TODO: Make this general for all cars
     void moveit(int x, int y, int index) {
-        Point currentPoint = vehiclePoints.get(index);
-        if (currentPoint.x != x || currentPoint.y != y) {
-            currentPoint.setLocation(x, y);
-        }
+        vehiclePoints.get(index).x = x;
+        vehiclePoints.get(index).y = y;
     }
 
     // Initializes the panel and reads the images
@@ -55,7 +51,7 @@ public class DrawPanel extends JPanel{
         vehicleImage.add(saabImage);
         vehiclePoints.add(new Point(0, 100));
         vehicleImage.add(scaniaImage);
-        vehiclePoints.add(new Point(200,200));
+        vehiclePoints.add(new Point(0,200));
     }
 
 
@@ -73,7 +69,7 @@ public class DrawPanel extends JPanel{
 
     //metod för att ta bort point och bild när en bil tas bort
     public void removeVehicle(int index) {
-        if (index >= 0 && index < vehicleImage.size() && index < vehiclePoints.size()) {
+        if (index < vehicleImage.size() && index < vehiclePoints.size()) {
             vehicleImage.remove(index);
             vehiclePoints.remove(index);
         }
