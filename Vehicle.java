@@ -9,7 +9,6 @@ public abstract class Vehicle implements Movable, Positionable {
     private double xpos; // x-pos of car
     private double ypos; // y-pos of car
     private double direction; // direction of car
-    private int size;
 
     public Vehicle(int nrDoors, Color color, double enginePower, String modelName) {
         this.nrDoors = nrDoors;
@@ -78,7 +77,7 @@ public abstract class Vehicle implements Movable, Positionable {
 
     // ----- Public Methods -----
     public void gas(double amount) { //ska inte kunna gasa om inte startengine är kallad
-        if (amount >= 0 && amount <= 1) {
+        if (amount >= 0 && amount <= 1 && currentSpeed >= 0.1) {
             incrementSpeed(amount);
         }
         else {
