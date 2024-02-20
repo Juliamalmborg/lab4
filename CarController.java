@@ -23,35 +23,10 @@ public class CarController {
     CarView frame;
     // A list of cars, modify if needed
     ArrayList<Vehicle> cars = new ArrayList<>();
-    CarWorkshop<Volvo240> volvoWorkshop = new CarWorkshop<Volvo240>(1, 0, 300);
+    CarWorkshop<Volvo240> volvoWorkshop = new CarWorkshop<Volvo240>(1, 0, 300); //ska tas bort härifrån
 
     //methods:
 
-    public static void main(String[] args) {
-        // Instance of this class
-        CarController cc = new CarController();
-
-        Volvo240 volvo = new Volvo240();
-        volvo.setXpos(0);
-        volvo.setYpos(0);
-
-        Saab95 saab = new Saab95();
-        saab.setXpos(0);
-        saab.setYpos(100);
-
-        Scania scania = new Scania();
-        scania.setXpos(0);
-        scania.setYpos(200);
-
-        cc.cars.add(volvo);
-        cc.cars.add(saab);
-        cc.cars.add(scania);
-
-        // Start a new view and send a reference of self
-        cc.frame = new CarView("CarSim 1.0", cc);
-        cc.timer.start();
-        // Start the timer
-    }
 
     /* Each step the TimerListener moves all the cars in the list and tells the
     * view to update its images. Change this method to your needs.
@@ -95,6 +70,10 @@ public class CarController {
             double threshold = 10; //
             return Math.abs(x - workshopWidth) <= threshold && Math.abs(y - workshopHeight) <= threshold;
         }
+    }
+
+    public void startTimer() {
+        timer.start();
     }
     // Calls the gas method for each car once
     void gas(int amount) {
