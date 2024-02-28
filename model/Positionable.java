@@ -1,3 +1,4 @@
+package model;
 public interface Positionable {
     double getXpos();
 
