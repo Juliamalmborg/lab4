@@ -1,6 +1,7 @@
 package controller;
 
 import model.CarModel;
+import model.TimerListener;
 import model.Vehicle;
 import view.CarView;
 
@@ -21,7 +22,7 @@ public class CarController {
     private final int delay = 50;
     // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
-    public Timer timer = new Timer(delay, new CarModel.TimerListener());
+    public Timer timer = new Timer(delay, new TimerListener());
     // The frame that represents this instance View of the MVC pattern
     private CarView frame;
 

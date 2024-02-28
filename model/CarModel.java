@@ -1,5 +1,6 @@
 package model;
 
+import controller.CarController;
 import view.CarView;
 
 import javax.swing.*;
@@ -13,9 +14,8 @@ public class CarModel implements ModelUpdateListener {
     private Timer timer = new Timer(delay, new TimerListener());
 
     // The frame that represents this instance View of the MVC pattern
-    CarView frame;
 
-    private CarList carList;
+    private final CarList carList;
     // A list of cars, modify if needed
 
     // Flyttat denna till CarList
@@ -29,14 +29,17 @@ public class CarModel implements ModelUpdateListener {
     //methods:
     public void addVehicle(Vehicle vehicle) {
         carList.addVehicle(vehicle);
-        actOnVehicleAdded(vehicle);
+        //listener?
     }
+
+    //notiffy function
 
     //update vehicles?
 
     public CarWorkshop getVolvoServiceShop(){return volvoWorkshop;}
 
     private final List<ModelUpdateListener> listeners = new ArrayList<>();
+    // gå igenom denna . anropa actonupdate på listam
     public void addListener(ModelUpdateListener l){
         listeners.add(l);
     }
@@ -44,12 +47,6 @@ public class CarModel implements ModelUpdateListener {
     public void actOnModelUpdate() {
         for (ModelUpdateListener l : listeners)
             l.actOnModelUpdate();
-    }
-
-    @Override
-    public void actOnVehicleAdded(Vehicle vehicle) {
-        for (ModelUpdateListener l : listeners)
-            l.actOnVehicleAdded(vehicle);
     }
 
 
@@ -61,10 +58,6 @@ public class CarModel implements ModelUpdateListener {
      * view to update its images. Change this method to your needs.
      * */
 
-
-    public void startTimer() {
-        timer.start();
-    }
     // Calls the gas method for each car once
     public void gas(int amount) {
         double gas = ((double) amount) / 100;
@@ -119,6 +112,46 @@ public class CarModel implements ModelUpdateListener {
     void stopAllVehicles() {
         for (Vehicle car : cars) {
             car.stopEngine();
+        }
+    }
+    private class TimerListener implements ActionListener{
+        CarController cc;
+        CarList cars;
+        public void actionPerformed(ActionEvent e) {
+            for (Vehicle car : cars.getVehicles()) {
+                car.move();
+                int x = (int) Math.round(car.getXpos());
+                int y = (int) Math.round(car.getYpos());
+                if (collisionFrame(x, y)) {
+                    car.invertDirection(); //en metod för invertDirection byta riktning
+                }
+                if (workshopCollision(x, y) && car instanceof Volvo240) {
+                    Volvo240 volvo = (Volvo240) car;
+                    volvo.stopEngine();
+                    volvoWorkshop.load(volvo);
+                    cars.removeVehicle(car);
+                    frame.drawPanel.removeVehicle(frame.drawPanel.vehicleImage.indexOf(frame.drawPanel.volvoImage));
+                    continue;
+                }
+                frame.drawPanel.moveit(x, y, cars.indexOf(car));
+                // repaint() calls the paintComponent method of the panel
+                frame.drawPanel.repaint();
+            }
+        }
+        // This method checks so that the object is with in the panel
+        public boolean collisionFrame(int x, int y) {
+            int panelWidth = frame.drawPanel.getWidth() ;
+            int panelHeight = frame.drawPanel.getHeight() ;
+            int ImageWidth = frame.drawPanel.vehicleImage.getFirst().getWidth();
+            int ImageHeight = frame.drawPanel.vehicleImage.getFirst().getHeight();
+            return x < 0 || x > panelWidth - ImageWidth || y > panelHeight - ImageHeight || y < 0;
+
+        }
+        public boolean workshopCollision(int x, int y) {
+            double workshopWidth = volvoWorkshop.getXpos();
+            double workshopHeight = volvoWorkshop.getYpos();
+            double threshold = 10; //
+            return Math.abs(x - workshopWidth) <= threshold && Math.abs(y - workshopHeight) <= threshold;
         }
     }
 }
