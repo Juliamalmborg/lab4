@@ -3,6 +3,6 @@ import model.Vehicle;
 
 public interface ModelUpdateListener {
     void actOnModelUpdate();
-    void actOnVehicleAdded(Vehicle vehicle);
+    //void actOnVehicleAdded(Vehicle vehicle);
 
 }
