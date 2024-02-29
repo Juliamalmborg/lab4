@@ -196,7 +196,8 @@ public class CarModel implements ModelUpdateListener {
 
     public void removeCar(){
         if (!carList.getVehicles().isEmpty()) {
-            carList.getVehicles().removeFirst();
+            Vehicle car = carList.getVehicles().getFirst();
+            removeVehicle(car);
         }
     }
 }
