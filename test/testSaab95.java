@@ -1,3 +1,5 @@
+import model.Saab95;
+import model.Vehicle;
 import org.junit.Test;
 
 import java.awt.*;

@@ -1,5 +1,6 @@
 package model;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class CarTransport extends Truck implements Loadable<Vehicle>{
 
@@ -8,6 +9,11 @@ public class CarTransport extends Truck implements Loadable<Vehicle>{
     public CarTransport(int nrDoors, Color color, double enginePower, String modelName) {
         super(nrDoors, color, enginePower, modelName);
         storage = new LifoStorage<Vehicle> (4);
+    }
+
+    @Override
+    public BufferedImage getImage() {
+        return null;
     }
 
     @Override
@@ -39,7 +45,7 @@ public class CarTransport extends Truck implements Loadable<Vehicle>{
         return ramp.getIsRampOn();
     }
 
-    protected int getnrCarsOnRamp(){
+    public int getnrCarsOnRamp(){
         return storage.getsize();
     }
 

@@ -1,3 +1,4 @@
+import model.Scania;
 import org.junit.Test;
 import java.awt.*;
 import static org.junit.Assert.assertEquals;

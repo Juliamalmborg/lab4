@@ -26,7 +26,7 @@ public abstract class Truck extends Vehicle {
     }
 
     @Override //för att kunna köra bilen efter lastning
-    protected void startEngine() {
+    public void startEngine() {
         if (ramp.getIsRampOn())throw new IllegalStateException("You can't start the engine while platform is down.");
         super.startEngine();
         }

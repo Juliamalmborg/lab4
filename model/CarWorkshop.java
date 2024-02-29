@@ -1,13 +1,17 @@
 package model;
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
-public class CarWorkshop<T extends Vehicle> implements Loadable<T>, Positionable{ // T - generic type parameter.
+import view.DrawPanel;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+public class CarWorkshop<T extends Vehicle> implements Loadable<T>, Drawable { // T - generic type parameter.
     // Indikerar på att det endast kan ta emot objekt av en viss typ.
     private final FifoStorage<T> storageInWorkshop;
     private double xpos;
     private double ypos;
+    BufferedImage volvoWorkshopImage;
 
     public CarWorkshop(int maxCapacity, double x, double y) {
 
@@ -35,5 +39,16 @@ public class CarWorkshop<T extends Vehicle> implements Loadable<T>, Positionable
     @Override
     public double getYpos() {
         return ypos;
+    }
+
+    @Override
+    public BufferedImage getImage(){
+        try{
+            volvoWorkshopImage = ImageIO.read(CarWorkshop.class.getResourceAsStream("../pics/VolvoBrand.jpg"));
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return volvoWorkshopImage;
     }
 }

@@ -1,4 +1,7 @@
 package model;
+
+import java.util.Random;
+
 public class CarFactory {
 
     //Ska man även skicka in ex nrDoors osv?
@@ -13,4 +16,18 @@ public class CarFactory {
         return new Scania();
     }
 
-}
+
+    public static Vehicle createRandomCar() {
+        Random random = new Random();
+        int randomNumber = random.nextInt(3);
+        switch (randomNumber) {
+            case 0:
+                return createVolvo240();
+            case 1:
+                return createSaab95();
+            case 2:
+                return createScania();
+
+    }
+        return null;
+    }}

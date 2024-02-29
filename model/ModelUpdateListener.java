@@ -1,8 +1,8 @@
 package model;
 import model.Vehicle;
 
-public interface ModelUpdateListener {
-    void actOnModelUpdate();
-    void actOnVehicleAdded(Vehicle vehicle);
+import java.util.ArrayList;
 
+public interface ModelUpdateListener {
+    void actOnModelUpdate(ArrayList<Drawable> drawables);
 }

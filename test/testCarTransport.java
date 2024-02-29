@@ -1,3 +1,7 @@
+import model.CarTransport;
+import model.Saab95;
+import model.Vehicle;
+import model.Volvo240;
 import org.junit.Test;
 import java.awt.*;
 
