@@ -1,6 +1,5 @@
 package model;
 
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +14,7 @@ public class CarModel implements ModelUpdateListener {
     private final int delay = 50;
     public Timer timer = new Timer(delay, new TimerListener());
     private CarList carList;
+
 
     ArrayList<CarWorkshop> carWorkshops = new ArrayList<>();
     //CarWorkshop<Volvo240> volvoWorkshop; //vi har tänkt
@@ -31,6 +31,7 @@ public class CarModel implements ModelUpdateListener {
     //interface: drawable objects
     public void addVehicle(Vehicle vehicle) {
         carList.addVehicle(vehicle);
+
         DrawableObjects.add(vehicle);
 
     }
@@ -51,6 +52,7 @@ public class CarModel implements ModelUpdateListener {
 
     //Listeners
     private final List<ModelUpdateListener> listeners = new ArrayList<>();
+    // gå igenom denna . anropa actonupdate på listam
     public void addListener(ModelUpdateListener l){
         listeners.add(l);
     }
@@ -64,6 +66,7 @@ public class CarModel implements ModelUpdateListener {
 
     }
 
+
     @Override
     public void actOnModelUpdate(ArrayList<Drawable> drawables) {
         for (ModelUpdateListener l : listeners)
@@ -73,6 +76,7 @@ public class CarModel implements ModelUpdateListener {
     public int getWidth() {
         return X;
     }
+
 
     public int getHeight() {
         return Y;
@@ -108,6 +112,7 @@ public class CarModel implements ModelUpdateListener {
             int ImageWidth = car.getImage().getWidth();
             int ImageHeight = car.getImage().getHeight();
             return x < 0 || x > getWidth() - ImageWidth || y > (getHeight()-240) - ImageHeight || y < 0;
+
 
         }
         public boolean workshopCollision(int x, int y) {
@@ -180,6 +185,7 @@ public class CarModel implements ModelUpdateListener {
             car.stopEngine();
         }
     }
+
     private static final int MaxCars = 10;
     public void addCar(){
         if (carList.getVehicles().size() < MaxCars) {

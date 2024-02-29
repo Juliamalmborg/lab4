@@ -3,6 +3,7 @@ package controller;
 import model.*;
 import main.CarView;
 
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 
 public class CarController {
     // member fields:
+ 
     private CarModel model;
 
     int gasAmount = 0;
