@@ -1,157 +1,202 @@
 package model;
 
-import controller.CarController;
-import view.CarView;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.lang.invoke.VarHandle;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.Random;
+
 public class CarModel implements ModelUpdateListener {
     private final int delay = 50;
-    private Timer timer = new Timer(delay, new TimerListener());
+    public Timer timer = new Timer(delay, new TimerListener());
+    private CarList carList;
 
-    // The frame that represents this instance View of the MVC pattern
 
-    private final CarList carList;
-    // A list of cars, modify if needed
+    ArrayList<CarWorkshop> carWorkshops = new ArrayList<>();
+    //CarWorkshop<Volvo240> volvoWorkshop; //vi har tänkt
 
-    // Flyttat denna till CarList
-    ArrayList<Vehicle> cars = new ArrayList<>();
-    CarWorkshop<Volvo240> volvoWorkshop = new CarWorkshop<Volvo240>(1, 0, 300); //ska tas bort härifrån
+    ArrayList<Drawable> DrawableObjects = new ArrayList<>();
+    //Storlek på fönster
+    private static final int X = 800;
+    private static final int Y = 800;
 
     public CarModel() {
         this.carList = new CarList();
-
     }
     //methods:
+    //interface: drawable objects
     public void addVehicle(Vehicle vehicle) {
         carList.addVehicle(vehicle);
-        //listener?
+
+        DrawableObjects.add(vehicle);
+
     }
 
-    //notiffy function
+    public void removeVehicle(Vehicle vehicle) {
+        carList.removeVehicle(vehicle);
+        DrawableObjects.remove(vehicle);
+    }
 
-    //update vehicles?
+    public void addWorkshop(CarWorkshop workshop) {
+        carWorkshops.add(workshop);
+        DrawableObjects.add(workshop);
+    }
 
-    public CarWorkshop getVolvoServiceShop(){return volvoWorkshop;}
 
+    public ArrayList<Vehicle> getVehicles(){return carList.getVehicles();
+    }
+
+    //Listeners
     private final List<ModelUpdateListener> listeners = new ArrayList<>();
     // gå igenom denna . anropa actonupdate på listam
     public void addListener(ModelUpdateListener l){
         listeners.add(l);
     }
-    @Override
-    public void actOnModelUpdate() {
+    protected void notifyListeners(){
         for (ModelUpdateListener l : listeners)
-            l.actOnModelUpdate();
+            l.actOnModelUpdate(DrawableObjects);
+    }
+
+    protected void addDrawableObjects(){
+
+
     }
 
 
-    // get för listan, metod?
+    @Override
+    public void actOnModelUpdate(ArrayList<Drawable> drawables) {
+        for (ModelUpdateListener l : listeners)
+            l.actOnModelUpdate(drawables);
+    }
+
+    public int getWidth() {
+        return X;
+    }
 
 
+    public int getHeight() {
+        return Y;
+    }
 
     /* Each step the TimerListener moves all the cars in the list and tells the
      * view to update its images. Change this method to your needs.
      * */
+    private class TimerListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            try {
+                for (Vehicle car : carList.getVehicles()) {
+                    car.move();
+                    int x = (int) Math.round(car.getXpos());
+                    int y = (int) Math.round(car.getYpos());
+                    if (collisionFrame(car, x, y)) {
+                        car.invertDirection();
+                    }
+                    if (workshopCollision(x, y) && car instanceof Volvo240) {
+                        Volvo240 volvo = (Volvo240) car;
+                        volvo.stopEngine();
+                        carWorkshops.get(0).load(volvo);
+                        removeVehicle(volvo);
+                    }
+                    notifyListeners();
+                }
+            }catch (Exception es){
+                es.printStackTrace();
+            }
+        }
 
-    // Calls the gas method for each car once
+        public boolean collisionFrame(Vehicle car, int x, int y) {
+            int ImageWidth = car.getImage().getWidth();
+            int ImageHeight = car.getImage().getHeight();
+            return x < 0 || x > getWidth() - ImageWidth || y > (getHeight()-240) - ImageHeight || y < 0;
+
+
+        }
+        public boolean workshopCollision(int x, int y) {
+            double workshopWidth = carWorkshops.get(0).getXpos();
+            double workshopHeight = carWorkshops.get(0).getYpos();
+            double threshold = 10; //
+            return Math.abs(x - workshopWidth) <= threshold && Math.abs(y - workshopHeight) <= threshold;
+        }
+        private void handleWorkshopCollision(Vehicle vehicle) {
+            Volvo240 volvo = (Volvo240) vehicle;
+            volvo.stopEngine();
+            carWorkshops.get(0).load(volvo);
+            removeVehicle(volvo); // Remove from the list in the model
+        }
+
+    }
+
     public void gas(int amount) {
         double gas = ((double) amount) / 100;
-        for (Vehicle car : cars
+        for (Vehicle car : this.carList.getVehicles()
         ) {
             car.gas(gas);
         }
     }
 
-    void brake(int amount){
+    public void brake(int amount){
         double brake = ((double) amount) / 100;
-        for (Vehicle car : cars
+        for (Vehicle car : this.carList.getVehicles()
         ){
             car.brake(brake);
         }
     }
-    //Till knapparna
-    void setTurboOn(){
-        for (Vehicle car : cars){
+
+    public void setTurboOn(){
+        for (Vehicle car : this.carList.getVehicles()){
             if (car instanceof Saab95) {
                 ((Saab95) car).setTurboOn();
             }
         }
     }
-    void setTurboOff(){
-        for (Vehicle car : cars){
+    public void setTurboOff(){
+        for (Vehicle car : this.carList.getVehicles()){
             if (car instanceof Saab95) {
                 ((Saab95) car).setTurboOff();
             }
         }
     }
-    void raiseRamp() {
-        for (Vehicle car : cars) {
+    public void raiseRamp() {
+        for (Vehicle car : this.carList.getVehicles()) {
             if (car instanceof Scania) {
                 ((Scania) car).raiseRamp();
             }
         }
     }
-    void lowerRamp() {
-        for (Vehicle car : cars) {
+    public void lowerRamp() {
+        for (Vehicle car : this.carList.getVehicles()) {
             if (car instanceof Scania) {
                 ((Scania) car).lowerRamp();
             }
         }
     }
-    void startAllVehicles() {
-        for (Vehicle car : cars) {
+    public void startAllVehicles() {
+        for (Vehicle car : this.carList.getVehicles()) {
             car.startEngine();
         }
     }
 
-    void stopAllVehicles() {
-        for (Vehicle car : cars) {
+    public void stopAllVehicles() {
+        for (Vehicle car : this.carList.getVehicles()) {
             car.stopEngine();
         }
     }
-    private class TimerListener implements ActionListener{
-        CarController cc;
-        CarList cars;
-        public void actionPerformed(ActionEvent e) {
-            for (Vehicle car : cars.getVehicles()) {
-                car.move();
-                int x = (int) Math.round(car.getXpos());
-                int y = (int) Math.round(car.getYpos());
-                if (collisionFrame(x, y)) {
-                    car.invertDirection(); //en metod för invertDirection byta riktning
-                }
-                if (workshopCollision(x, y) && car instanceof Volvo240) {
-                    Volvo240 volvo = (Volvo240) car;
-                    volvo.stopEngine();
-                    volvoWorkshop.load(volvo);
-                    cars.removeVehicle(car);
-                    frame.drawPanel.removeVehicle(frame.drawPanel.vehicleImage.indexOf(frame.drawPanel.volvoImage));
-                    continue;
-                }
-                frame.drawPanel.moveit(x, y, cars.indexOf(car));
-                // repaint() calls the paintComponent method of the panel
-                frame.drawPanel.repaint();
-            }
-        }
-        // This method checks so that the object is with in the panel
-        public boolean collisionFrame(int x, int y) {
-            int panelWidth = frame.drawPanel.getWidth() ;
-            int panelHeight = frame.drawPanel.getHeight() ;
-            int ImageWidth = frame.drawPanel.vehicleImage.getFirst().getWidth();
-            int ImageHeight = frame.drawPanel.vehicleImage.getFirst().getHeight();
-            return x < 0 || x > panelWidth - ImageWidth || y > panelHeight - ImageHeight || y < 0;
 
+    private static final int MaxCars = 10;
+    public void addCar(){
+        if (carList.getVehicles().size() < MaxCars) {
+            Vehicle newCar = CarFactory.createRandomCar();
+            addVehicle(newCar);
         }
-        public boolean workshopCollision(int x, int y) {
-            double workshopWidth = volvoWorkshop.getXpos();
-            double workshopHeight = volvoWorkshop.getYpos();
-            double threshold = 10; //
-            return Math.abs(x - workshopWidth) <= threshold && Math.abs(y - workshopHeight) <= threshold;
+    }
+
+    public void removeCar(){
+        if (!carList.getVehicles().isEmpty()) {
+            carList.getVehicles().removeFirst();
         }
     }
 }

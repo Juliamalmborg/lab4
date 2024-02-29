@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class CarList {
     private ArrayList<Vehicle> cars = new ArrayList<>();
+
+    private ArrayList<CarWorkshop> workshop = new ArrayList<>();
     public void addVehicle(Vehicle vehicle) {
         cars.add(vehicle);
     }
@@ -15,9 +17,4 @@ public class CarList {
     public ArrayList<Vehicle> getVehicles(){
         return cars;
     }
-
-
-    //index
-
-
 }

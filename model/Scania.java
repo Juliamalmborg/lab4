@@ -1,6 +1,11 @@
 package model;
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
 public class Scania extends Truck {
+    BufferedImage scaniaImage;
     private final double maxAngle = 70;
     private RampWithAngle ramp;
 
@@ -39,5 +44,15 @@ public class Scania extends Truck {
         return ramp.getMaxAngle();
     }
 
+    @Override
+    public BufferedImage getImage() {
+        try{
+            scaniaImage = ImageIO.read(Scania.class.getResourceAsStream("../pics/Scania.jpg"));
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return scaniaImage;
     }
+}
 

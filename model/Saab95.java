@@ -1,7 +1,13 @@
 package model;
+import view.DrawPanel;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class Saab95 extends Vehicle{
+    BufferedImage saabImage;
 
     private boolean turboOn;
     
@@ -18,10 +24,20 @@ public class Saab95 extends Vehicle{
     }
 
     @Override
-    protected double speedFactor(){
+    public double speedFactor(){
         double turbo = 1;
         if(turboOn) turbo = 1.3;
         return getEnginePower() * 0.01 * turbo;
     }
 
+    @Override
+    public BufferedImage getImage(){
+        try{
+            saabImage = ImageIO.read(Saab95.class.getResourceAsStream("../pics/Saab95.jpg"));
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return saabImage;
+    }
 }

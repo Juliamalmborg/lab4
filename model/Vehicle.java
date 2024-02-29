@@ -1,7 +1,10 @@
 package model;
-import java.awt.*;
 
-public abstract class Vehicle implements Movable, Positionable {
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
+
+public abstract class Vehicle implements Movable, Drawable {
     private int nrDoors; // Number of doors on the car
     private double enginePower; // Engine power of the car
     private double currentSpeed; // The current speed of the car
@@ -24,22 +27,22 @@ public abstract class Vehicle implements Movable, Positionable {
     }
 
     // ------- geters and setters ---------
-    protected int getNrDoors() {
+    public int getNrDoors() {
         return this.nrDoors;
     }
-    protected double getEnginePower() {
+    public double getEnginePower() {
         return this.enginePower;
     }
 
-    protected double getCurrentSpeed() {
+    public double getCurrentSpeed() {
         return this.currentSpeed;
     }
 
-    protected Color getColor() {
+    public Color getColor() {
         return this.color;
     }
 
-    protected void setColor(Color clr) {
+    public void setColor(Color clr) {
         this.color = clr;
     }
     @Override
@@ -47,15 +50,18 @@ public abstract class Vehicle implements Movable, Positionable {
     @Override
     public double getYpos(){return this.ypos;}
 
+    @Override
+    public abstract BufferedImage getImage();
+
     public void setXpos(double x) {this.xpos = x;}
 
     public void setYpos(double y) {this.ypos = y;}
 
-    protected double getDirection(){return this.direction;}
+    public double getDirection(){return this.direction;}
 
 
     // ----- Protected methods ---
-    protected void startEngine(){
+    public void startEngine(){
         this.currentSpeed = 0.1;
     }
 
