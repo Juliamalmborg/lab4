@@ -1,7 +1,6 @@
 package main;
 
 import model.*;
-import main.CarView;
 import controller.CarController;
 import view.DrawPanel;
 
@@ -17,22 +16,6 @@ public class CarApp {
         CarView cv = new CarView("CarSim 1.0", drawPanel, cars.getWidth(), cars.getHeight());
 
         CarController cc = new CarController(cars, cv);
-
-
-        // lägger till listeners
-        cv.gasSpinner.addChangeListener(cc.GasSpinner());
-        cv.gasButton.addActionListener(cc.GasActionListener());
-        cv.brakeButton.addActionListener(cc.BrakeActionListener());
-        cv.turboOnButton.addActionListener(cc.TurboOnActionListener());
-        cv.turboOffButton.addActionListener(cc.TurboOffActionListener());
-        cv.liftBedButton.addActionListener(cc.LiftBedActionListener());
-        cv.lowerBedButton.addActionListener(cc.LowerBedActionListener());
-        cv.startButton.addActionListener(cc.StartActionListener());
-        cv.stopButton.addActionListener(cc.StopActionListener());
-
-        cv.addCarButton.addActionListener(cc.AddCarActionListener());
-        cv.removeCarButton.addActionListener(cc.RemoveCarActionListener());
-
 
         cars.addListener(drawPanel);
         cars.timer.start();
