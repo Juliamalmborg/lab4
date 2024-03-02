@@ -5,9 +5,7 @@ import main.CarView;
 
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
@@ -23,6 +21,8 @@ public class CarController {
  
     private CarModel model;
 
+    private CarView cv;
+
     int gasAmount = 0;
     // A list of cars, modify if needed
     ArrayList<Vehicle> cars;
@@ -30,9 +30,24 @@ public class CarController {
     public CarController(CarModel model, CarView cv) { //använder inte Carview
         this.cars = model.getVehicles();
         this.model = model;
+        this.cv = cv;
+        initComponents();
     }
 
+    private void initComponents(){
+        cv.gasSpinner.addChangeListener(GasSpinner());
+        cv.gasButton.addActionListener(GasActionListener());
+        cv.brakeButton.addActionListener(BrakeActionListener());
+        cv.turboOnButton.addActionListener(TurboOnActionListener());
+        cv.turboOffButton.addActionListener(TurboOffActionListener());
+        cv.liftBedButton.addActionListener(LiftBedActionListener());
+        cv.lowerBedButton.addActionListener(LowerBedActionListener());
+        cv.startButton.addActionListener(StartActionListener());
+        cv.stopButton.addActionListener(StopActionListener());
 
+        cv.addCarButton.addActionListener(AddCarActionListener());
+        cv.removeCarButton.addActionListener(RemoveCarActionListener());
+    }
     //från början från CarView, skapar actionlisteners
     public ChangeListener GasSpinner() {
         return e -> gasAmount = (int) ((JSpinner) e.getSource()).getValue();
@@ -73,6 +88,8 @@ public class CarController {
     public ActionListener AddCarActionListener(){ return e -> this.model.addCar();}
 
     public ActionListener RemoveCarActionListener(){ return e -> this.model.removeCar();}
+
+
 }
 
 

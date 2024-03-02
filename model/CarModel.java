@@ -3,12 +3,9 @@ package model;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.lang.invoke.VarHandle;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.Random;
 
 public class CarModel implements ModelUpdateListener {
     private final int delay = 50;
@@ -31,7 +28,6 @@ public class CarModel implements ModelUpdateListener {
     //interface: drawable objects
     public void addVehicle(Vehicle vehicle) {
         carList.addVehicle(vehicle);
-
         DrawableObjects.add(vehicle);
 
     }
@@ -50,9 +46,8 @@ public class CarModel implements ModelUpdateListener {
     public ArrayList<Vehicle> getVehicles(){return carList.getVehicles();
     }
 
-    //Listeners
     private final List<ModelUpdateListener> listeners = new ArrayList<>();
-    // gå igenom denna . anropa actonupdate på listam
+
     public void addListener(ModelUpdateListener l){
         listeners.add(l);
     }
@@ -60,12 +55,6 @@ public class CarModel implements ModelUpdateListener {
         for (ModelUpdateListener l : listeners)
             l.actOnModelUpdate(DrawableObjects);
     }
-
-    protected void addDrawableObjects(){
-
-
-    }
-
 
     @Override
     public void actOnModelUpdate(ArrayList<Drawable> drawables) {
@@ -101,7 +90,7 @@ public class CarModel implements ModelUpdateListener {
                         carWorkshops.get(0).load(volvo);
                         removeVehicle(volvo);
                     }
-                    notifyListeners();
+                notifyListeners();
                 }
             }catch (Exception es){
                 es.printStackTrace();
@@ -121,13 +110,6 @@ public class CarModel implements ModelUpdateListener {
             double threshold = 10; //
             return Math.abs(x - workshopWidth) <= threshold && Math.abs(y - workshopHeight) <= threshold;
         }
-        private void handleWorkshopCollision(Vehicle vehicle) {
-            Volvo240 volvo = (Volvo240) vehicle;
-            volvo.stopEngine();
-            carWorkshops.get(0).load(volvo);
-            removeVehicle(volvo); // Remove from the list in the model
-        }
-
     }
 
     public void gas(int amount) {

@@ -5,16 +5,15 @@ import java.util.ArrayList;
 public class CarList {
     private ArrayList<Vehicle> cars = new ArrayList<>();
 
-    private ArrayList<CarWorkshop> workshop = new ArrayList<>();
-    public void addVehicle(Vehicle vehicle) {
+    protected void addVehicle(Vehicle vehicle) {
         cars.add(vehicle);
     }
 
-    public void removeVehicle(Vehicle vehicle){
+    protected void removeVehicle(Vehicle vehicle){
         cars.remove(vehicle);
     }
 
-    public ArrayList<Vehicle> getVehicles(){
+    protected ArrayList<Vehicle> getVehicles(){
         return cars;
     }
 }
