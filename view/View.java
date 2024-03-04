@@ -15,15 +15,15 @@ import javax.swing.*;
 
 // This panel represents the animated part of the view with the car images.
 
-public class DrawPanel extends JPanel implements ModelUpdateListener {
+public class View extends JPanel implements ModelUpdateListener {
     ArrayList<Drawable> drawables;
     // Initializes the panel and reads the images
 
-    public DrawPanel(int width, int height) {
+    public View(int width, int height) {
         this.drawables = new ArrayList<>();
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(width, height-240));
-        this.setBackground(Color.cyan);
+        this.setBackground(Color.pink);
     }
 
 

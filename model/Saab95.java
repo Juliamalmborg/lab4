@@ -1,5 +1,4 @@
 package model;
-import view.DrawPanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

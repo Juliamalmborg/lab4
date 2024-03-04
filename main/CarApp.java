@@ -2,7 +2,7 @@ package main;
 
 import model.*;
 import controller.CarController;
-import view.DrawPanel;
+import view.View;
 
 
 public class CarApp {
@@ -10,21 +10,21 @@ public class CarApp {
     public static void main(String[] args) {
         // create model
         CarModel cars = initModel();
-        //create drawPanel
-        DrawPanel drawPanel = new DrawPanel(cars.getWidth(), cars.getHeight());
+        //create view
+        View view = new View(cars.getWidth(), cars.getHeight());
 
-        CarView cv = new CarView("CarSim 1.0", drawPanel, cars.getWidth(), cars.getHeight());
+        UserInterface userInterface = new UserInterface("CarSim 1.0", view, cars.getWidth(), cars.getHeight());
 
-        CarController cc = new CarController(cars, cv);
+        CarController cc = new CarController(cars, userInterface);
 
-        cars.addListener(drawPanel);
+        cars.addListener(view);
         cars.timer.start();
 }
 
     public static CarModel initModel() {
         CarModel cm = new CarModel();
 
-        CarWorkshop<Volvo240> volvoWorkshop = new CarWorkshop<Volvo240>(1, 0, 300);
+        CarWorkshop<Volvo240> volvoWorkshop = new CarWorkshop<Volvo240>(1, 300, 300);
 
         Vehicle volvo = CarFactory.createVolvo240();
         volvo.setXpos(0);
