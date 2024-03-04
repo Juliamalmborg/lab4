@@ -11,11 +11,8 @@ public class CarModel implements ModelUpdateListener {
     private final int delay = 50;
     public Timer timer = new Timer(delay, new TimerListener());
     private CarList carList;
-
-
     ArrayList<CarWorkshop> carWorkshops = new ArrayList<>();
     //CarWorkshop<Volvo240> volvoWorkshop; //vi har tänkt
-
     ArrayList<Drawable> DrawableObjects = new ArrayList<>();
     //Storlek på fönster
     private static final int X = 800;
@@ -23,6 +20,7 @@ public class CarModel implements ModelUpdateListener {
 
     public CarModel() {
         this.carList = new CarList();
+
     }
     //methods:
     //interface: drawable objects
@@ -90,8 +88,8 @@ public class CarModel implements ModelUpdateListener {
                         carWorkshops.get(0).load(volvo);
                         removeVehicle(volvo);
                     }
-                notifyListeners();
                 }
+            notifyListeners();
             }catch (Exception es){
                 es.printStackTrace();
             }
@@ -112,6 +110,7 @@ public class CarModel implements ModelUpdateListener {
         }
     }
 
+    // Alla metoder som kallar på olika Vehicle-metoder som ändrar modellen
     public void gas(int amount) {
         double gas = ((double) amount) / 100;
         for (Vehicle car : this.carList.getVehicles()

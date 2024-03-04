@@ -1,16 +1,10 @@
 package main;
 
-import controller.CarController;
-import model.CarModel;
-import view.DrawPanel;
+import view.View;
 
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * This class represents the full view of the MVC pattern of your car simulator.
@@ -20,11 +14,10 @@ import java.awt.event.ActionListener;
  * TODO: Write more actionListeners and wire the rest of the buttons
  **/
 
-public class CarView extends JFrame{
+public class UserInterface extends JFrame{
 
     // The controller member
-    DrawPanel drawPanel;
-    CarController cc;
+    View view;
     JPanel controlPanel = new JPanel();
     JPanel gasPanel = new JPanel();
     public JSpinner gasSpinner = new JSpinner();
@@ -49,8 +42,8 @@ public class CarView extends JFrame{
     private int Y; //frameHeight
 
     // Constructor
-    public CarView(String framename, DrawPanel drawpanel, int frameWidth, int frameHeight){
-        this.drawPanel = drawpanel; // ska denna skapas här?
+    public UserInterface(String framename, View view, int frameWidth, int frameHeight){
+        this.view = view; // ska denna skapas här?
         this.Y = frameHeight;
         this.X = frameWidth;
         // som parametrar int frameWidth, int frameHeight)
@@ -65,7 +58,7 @@ public class CarView extends JFrame{
         this.setTitle(title);
         this.setPreferredSize(new Dimension(X, Y));
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        this.add(drawPanel);
+        this.add(view);
 
 
         SpinnerModel spinnerModel =

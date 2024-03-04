@@ -1,7 +1,7 @@
 package controller;
 
 import model.*;
-import main.CarView;
+import main.UserInterface;
 
 
 import javax.swing.*;
@@ -21,32 +21,32 @@ public class CarController {
  
     private CarModel model;
 
-    private CarView cv;
+    private UserInterface userInterface;
 
     int gasAmount = 0;
     // A list of cars, modify if needed
     ArrayList<Vehicle> cars;
 
-    public CarController(CarModel model, CarView cv) { //använder inte Carview
+    public CarController(CarModel model, UserInterface userInterface) { //använder inte Carview
         this.cars = model.getVehicles();
         this.model = model;
-        this.cv = cv;
+        this.userInterface = userInterface;
         initComponents();
     }
 
     private void initComponents(){
-        cv.gasSpinner.addChangeListener(GasSpinner());
-        cv.gasButton.addActionListener(GasActionListener());
-        cv.brakeButton.addActionListener(BrakeActionListener());
-        cv.turboOnButton.addActionListener(TurboOnActionListener());
-        cv.turboOffButton.addActionListener(TurboOffActionListener());
-        cv.liftBedButton.addActionListener(LiftBedActionListener());
-        cv.lowerBedButton.addActionListener(LowerBedActionListener());
-        cv.startButton.addActionListener(StartActionListener());
-        cv.stopButton.addActionListener(StopActionListener());
+        userInterface.gasSpinner.addChangeListener(GasSpinner());
+        userInterface.gasButton.addActionListener(GasActionListener());
+        userInterface.brakeButton.addActionListener(BrakeActionListener());
+        userInterface.turboOnButton.addActionListener(TurboOnActionListener());
+        userInterface.turboOffButton.addActionListener(TurboOffActionListener());
+        userInterface.liftBedButton.addActionListener(LiftBedActionListener());
+        userInterface.lowerBedButton.addActionListener(LowerBedActionListener());
+        userInterface.startButton.addActionListener(StartActionListener());
+        userInterface.stopButton.addActionListener(StopActionListener());
 
-        cv.addCarButton.addActionListener(AddCarActionListener());
-        cv.removeCarButton.addActionListener(RemoveCarActionListener());
+        userInterface.addCarButton.addActionListener(AddCarActionListener());
+        userInterface.removeCarButton.addActionListener(RemoveCarActionListener());
     }
     //från början från CarView, skapar actionlisteners
     public ChangeListener GasSpinner() {
