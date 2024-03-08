@@ -84,7 +84,6 @@ public class CarModel implements ModelUpdateListener {
                     }
                     if (workshopCollision(x, y) && car instanceof Volvo240) {
                         Volvo240 volvo = (Volvo240) car;
-                        volvo.stopEngine();
                         carWorkshops.get(0).load(volvo);
                         removeVehicle(volvo);
                     }
